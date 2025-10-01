@@ -1,0 +1,71 @@
+{
+  "compilerOptions": {
+    // Configuración del compilador
+    "target": "ES2020",                          // Versión de JavaScript de salida
+    "module": "commonjs",                        // Sistema de módulos (Node.js usa CommonJS)
+    "lib": ["ES2020"],                          // Librerías incluidas
+    "outDir": "./dist",                         // Carpeta de salida compilada
+    "rootDir": "./src",                         // Carpeta raíz del código fuente
+    
+    // Configuración estricta
+    "strict": true,                             // Habilita todas las verificaciones estrictas
+    "noImplicitAny": true,                      // Error en tipos 'any' implícitos
+    "strictNullChecks": true,                   // Verificación estricta de null/undefined
+    "strictFunctionTypes": true,                // Verificación estricta de tipos de función
+    "strictBindCallApply": true,                // Verificación estricta de bind/call/apply
+    "strictPropertyInitialization": true,       // Inicialización estricta de propiedades
+    "noImplicitReturns": true,                  // Error si no todas las rutas retornan valor
+    "noFallthroughCasesInSwitch": true,         // Error en casos switch sin break
+    
+    // Configuración de módulos
+    "esModuleInterop": true,                    // Interoperabilidad con módulos ES
+    "allowSyntheticDefaultImports": true,       // Permite imports por defecto sintéticos
+    "forceConsistentCasingInFileNames": true,   // Fuerza consistencia en nombres de archivos
+    "skipLibCheck": true,                       // Omite verificación de archivos .d.ts
+    "resolveJsonModule": true,                  // Permite importar archivos JSON
+    
+    // Decoradores (útil para frameworks)
+    "experimentalDecorators": true,             // Soporte experimental para decoradores
+    "emitDecoratorMetadata": true,              // Emite metadata de decoradores
+    
+    // Configuración adicional
+    "removeComments": true,                     // Remueve comentarios en la compilación
+    "noEmitOnError": true,                      // No emite archivos si hay errores
+    "sourceMap": true,                          // Genera mapas de fuente para debugging
+    "declaration": false,                       // No genera archivos .d.ts (no necesario para backend)
+    
+    // Configuración de path mapping (opcional)
+    "baseUrl": "./src",                         // Base para resolver rutas
+    "paths": {
+      "@/*": ["*"],                             // Alias @ para src/
+      "@config/*": ["config/*"],
+      "@controllers/*": ["controllers/*"],
+      "@middleware/*": ["middleware/*"],
+      "@models/*": ["models/*"],
+      "@routes/*": ["routes/*"],
+      "@services/*": ["services/*"],
+      "@types/*": ["types/*"],
+      "@utils/*": ["utils/*"]
+    }
+  },
+  
+  // Archivos a incluir
+  "include": [
+    "src/**/*",                                 // Todos los archivos en src/
+    "src/**/*.json"                             // Archivos JSON en src/
+  ],
+  
+  // Archivos a excluir
+  "exclude": [
+    "node_modules",                             // Módulos de terceros
+    "dist",                                     // Archivos compilados
+    "**/*.test.ts",                             // Archivos de prueba
+    "**/*.spec.ts"                              // Archivos de especificación
+  ],
+  
+  // Configuración para Node.js
+  "ts-node": {
+    "esm": false,                               // No usar módulos ES en ts-node
+    "experimentalSpecifierResolution": "node"   // Resolución de especificadores estilo Node
+  }
+}
