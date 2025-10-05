@@ -34,9 +34,8 @@ export const putEmpresas = async (req: Request, res: Response) => {
       , actividad
       , idUser
     } = req.body;
-
     const pool = await connectDB();
-    console.log({
+    console.log('asdasdas pool', pool, {
       idEstacion,
       accion,
       nomEstacion,
@@ -50,7 +49,6 @@ export const putEmpresas = async (req: Request, res: Response) => {
       actividad,
       idUser
     });
-
     const result = await pool
       .request()
       .input("nomEstacion", sql.VarChar(50), nomEstacion)
@@ -61,13 +59,13 @@ export const putEmpresas = async (req: Request, res: Response) => {
       .input("localidad", sql.VarChar(50), localidad)
       .input("provincia", sql.VarChar(50), provincia)
       .input("telefono", sql.VarChar(15), telefono)
-      .input("actividad", sql.Date, actividad)
+      .input("actividad", sql.VarChar(50), actividad)
       .input("idUser", sql.Int, idUser)
       .input("idEstacion", sql.Int, idEstacion)
       .input("accion", sql.Char(4), accion)
       .execute("sp_estaciones");
-
-    res.json(result.recordset);
+    console.log('Resultado del SP:', result);
+    res.json(result.recordset[0]);
   } catch (err: any) {
     console.error("Error al ejecutar SP:", err);
     res.status(500).json({ message: err.message });
