@@ -35,20 +35,6 @@ export const putEmpresas = async (req: Request, res: Response) => {
       , idUser
     } = req.body;
     const pool = await connectDB();
-    console.log('asdasdas pool', pool, {
-      idEstacion,
-      accion,
-      nomEstacion,
-      cuit,
-      ingBrutos,
-      direccion,
-      cp,
-      localidad,
-      provincia,
-      telefono,
-      actividad,
-      idUser
-    });
     const result = await pool
       .request()
       .input("nomEstacion", sql.VarChar(50), nomEstacion)
@@ -64,10 +50,42 @@ export const putEmpresas = async (req: Request, res: Response) => {
       .input("idEstacion", sql.Int, idEstacion)
       .input("accion", sql.Char(4), accion)
       .execute("sp_estaciones");
-    console.log('Resultado del SP:', result);
+    // console.log('Resultado del SP:', result);
     res.json(result.recordset[0]);
   } catch (err: any) {
     console.error("Error al ejecutar SP:", err);
     res.status(500).json({ message: err.message });
   }
 }
+
+export const deleteEmpresa = async (req: Request, res: Response) => {
+  try {
+    const { idEstacion, accion } = req.params;
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .input("idEstacion", sql.Int, idEstacion)
+      .input("accion", sql.Char(4), accion)
+      .execute("sp_estaciones");
+    res.json(result.recordset[0]);
+  } catch (err: any) {
+    console.error("⚠️ ERROR DETALLADO EN DELETE:", {
+      message: err.message,
+      name: err.name,
+      code: err.code,
+      number: err.number,
+      lineNumber: err.lineNumber,
+      state: err.state,
+      stack: err.stack,
+      originalError: err.originalError,
+    });
+
+    res.status(500).json({
+      error: true,
+      message: err.message,
+      code: err.code,
+      details: err.originalError,
+    });
+  }
+
+};
