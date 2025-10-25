@@ -6,6 +6,7 @@ import { registerRoutes } from "./config/registerRoutes";
 import * as routes from "./routes"; // Importa todas las rutas de la aplicacion
 import 'dotenv/config';
 import { swaggerDocs } from "./config/swagger";
+import authRoutes from "./routes/auth";
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ const app = express();
 //Middlewares
 app.use(cors());
 app.use(express.json());
-
+app.use("/api/auth", authRoutes);
 
 //Registrar rutas
 registerRoutes(app, routes);
