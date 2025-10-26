@@ -21,9 +21,11 @@
     "esModuleInterop": true,                    // Interoperabilidad con módulos ES
     "allowSyntheticDefaultImports": true,       // Permite imports por defecto sintéticos
     "forceConsistentCasingInFileNames": true,   // Fuerza consistencia en nombres de archivos
+    "moduleResolution": "node",
     "skipLibCheck": true,                       // Omite verificación de archivos .d.ts
     "resolveJsonModule": true,                  // Permite importar archivos JSON
-    
+    "moduleDetection": "force",
+
     // Decoradores (útil para frameworks)
     "experimentalDecorators": true,             // Soporte experimental para decoradores
     "emitDecoratorMetadata": true,              // Emite metadata de decoradores
