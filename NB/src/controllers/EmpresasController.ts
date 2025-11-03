@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { connectDB } from "@/config/sqlDB-DESKTOP";
-import sql from "mssql";
+import sql, { IResult, IRecordSet } from "mssql";
 
 export const getEmpresas = async (req: Request, res: Response) => {
   try {
@@ -120,6 +120,32 @@ export const postEmpresa = async (req: Request, res: Response) => {
       .input("accion", sql.Char(4), accion)
       .execute("sp_estaciones");
     res.json(result.recordset[0]);
+  } catch (err: any) {
+    console.error("Error al ejecutar SP:", err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export const detailsEmpresa = async (req: Request, res: Response) => {
+  try {
+    const { idEstacion } = req.params;
+    const pool = await connectDB();
+
+    const result: IResult<any> = await pool
+      .request()
+      .input("idEmpresa", sql.Int, idEstacion)
+      .execute("sp_detalle_gral");
+
+    // ✅ Forzamos el tipo como array
+    const recordsets = result.recordsets as IRecordSet<any>[];
+
+    const [infoEmpresa, combustible, impuesto] = recordsets;
+
+    res.json({
+      empresa: infoEmpresa?.[0] || null,
+      combustible: combustible || [],
+      impuesto: impuesto || []
+    });
   } catch (err: any) {
     console.error("Error al ejecutar SP:", err);
     res.status(500).json({ message: err.message });
