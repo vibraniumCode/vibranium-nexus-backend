@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCombustible, updateCombustiblePrice } from "@/controllers/CombustibleController";
+import { getTCombustible, getCombustible, postTCombustible } from "@/controllers/CombustibleController";
 
 const router = Router();
 
@@ -14,7 +14,10 @@ const router = Router();
  *       200:
  *         description: Lista de combustibles
  */
-router.get("/", getCombustible);
+
+router.get("/", getTCombustible);
+router.get("/:idEmpresa", getCombustible);
+router.post("/:accion", postTCombustible);
 
 /**
  * @openapi
@@ -44,6 +47,6 @@ router.get("/", getCombustible);
  *       200:
  *         description: Precio actualizado correctamente
  */
-router.put("/:id", updateCombustiblePrice);
+// router.put("/:id", updateCombustiblePrice);
 
 export default router;

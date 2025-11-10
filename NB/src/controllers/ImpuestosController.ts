@@ -1,14 +1,32 @@
 import { Request, Response } from "express";
 import { connectDB } from "@/config/sqlDB-DESKTOP";
 import sql from "mssql";
+import { execFile } from "child_process";
 
-export const getImpuestos = async (req: Request, res: Response) => {
+export const getTImpuestos = async (req: Request, res: Response) => {
   try {
     const pool = await connectDB(); //Conexion a la base de datos
-    const result = await pool.request().query("SELECT * FROM Timpuestos");
+    const result = await pool.request().query("EXEC sp_impuestos");
     res.json(result.recordset); //Respuesta con los datos obtenidos
   } catch (err) {
     console.error("Error al obtener los impuestos:", err);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+};
+
+export const postTImpuestos = async (req: Request, res: Response) => {
+  try {
+    const { accion } = req.params;
+    const { tipo } = req.body;
+    const pool = await connectDB(); //Conexion a la base de datos
+    const result = await pool
+      .request()
+      .input("tipo", sql.VarChar(50), tipo)
+      .input("accion", sql.Char(4), accion)
+      .execute("sp_impuestos");
+    res.json(result.recordset); //Respuesta con los datos obtenidos
+  } catch (err) {
+    console.error("Error al crear el impuesto:", err);
     res.status(500).json({ message: "Error interno del servidor" });
   }
 };
