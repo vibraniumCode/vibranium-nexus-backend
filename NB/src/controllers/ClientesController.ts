@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { connectDB } from "@/config/sqlDB-DESKTOP"
+import { connectDB } from "../config/sqlDB-DESKTOP"
 import sql from "mssql"
 
 export const getClientes = async (req: Request, res: Response) => {

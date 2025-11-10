@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getTCombustible, getCombustible, postTCombustible } from "@/controllers/CombustibleController";
+import { getTCombustible, getCombustible, postTCombustible } from "../controllers/CombustibleController";
 
 const router = Router();
 

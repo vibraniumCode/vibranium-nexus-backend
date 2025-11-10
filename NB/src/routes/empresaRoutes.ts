@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getEmpresas, putEmpresas, deleteEmpresa, postEmpresa, detailsEmpresa } from "@/controllers/EmpresasController";
+import { getEmpresas, putEmpresas, deleteEmpresa, postEmpresa, detailsEmpresa } from "../controllers/EmpresasController";
 
 const router = Router();
 router.get("/:accion", getEmpresas);

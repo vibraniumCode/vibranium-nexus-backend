@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { getTImpuestos, postTImpuestos, postImpuestos, deleteImpuestos, putEmpresas } from "@/controllers/ImpuestosController";
-//import { getImpEstacion } from "@/controllers/ImpuestosController";
+import { getTImpuestos, postTImpuestos, postImpuestos, deleteImpuestos, putEmpresas } from "../controllers/ImpuestosController";
 
 const router = Router();
 router.get("/", getTImpuestos);

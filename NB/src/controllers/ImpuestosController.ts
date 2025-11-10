@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { connectDB } from "@/config/sqlDB-DESKTOP";
+import { connectDB } from "../config/sqlDB-DESKTOP";
 import sql from "mssql";
 import { execFile } from "child_process";
 

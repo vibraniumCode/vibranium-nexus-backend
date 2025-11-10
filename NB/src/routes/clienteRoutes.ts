@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getClientes, putClientes, deleteCliente, postCliente } from "@/controllers/ClientesController";
+import { getClientes, putClientes, deleteCliente, postCliente } from "../controllers/ClientesController";
 
 const router = Router();
 router.get("/:accion", getClientes);
