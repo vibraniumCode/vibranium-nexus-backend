@@ -3,7 +3,7 @@ import { getTImpuestos, postTImpuestos, postImpuestos, deleteImpuestos, putEmpre
 
 const router = Router();
 router.get("/", getTImpuestos);
-router.post("/:accion", postTImpuestos);
+router.post("/tipo/:accion", postTImpuestos);
 router.post("/:accion", postImpuestos);
 router.delete("/:idEmpresa/:idCombustible/:idImpuesto/:accion", deleteImpuestos);
 router.put("/:idEmpresa/:idCombustible/:idImpuesto/:accion", putEmpresas);
