@@ -1,7 +1,9 @@
+import 'tsconfig-paths/register';
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { connectDB } from "./config/sqlDB-DESKTOP";
+// import { connectDB } from "./config/sqlDB-DESKTOP";
+import { connectDB } from "./config/sqlSomee";
 import { registerRoutes } from "./config/registerRoutes";
 import * as routes from "./routes"; // Importa todas las rutas de la aplicacion
 import 'dotenv/config';
@@ -23,8 +25,6 @@ registerRoutes(app, routes);
 //Conectar a la base de datos
 connectDB();
 
-
-
 //Ruta raiz
 app.get("/", async (req, res) => {
   res.send("¡Backend conectado a SQL Server!");
@@ -33,6 +33,6 @@ app.get("/", async (req, res) => {
 // Iniciar servidor
 const PORT = Number(process.env.PORT) || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor escuchando en http//localhost:${PORT}`);
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
   swaggerDocs(app, PORT); // 👈 activamos Swagger
 })
