@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getTCombustible, getCombustible, postTCombustible } from "../controllers/CombustibleController";
+import { getTCombustible, getCombustible, postTCombustible, postCombustibleEmpresa, deleteCombustibleEmpresa, putCombustibleEmpresa } from "../controllers/CombustibleController";
 
 const router = Router();
 
@@ -16,8 +16,15 @@ const router = Router();
  */
 
 router.get("/", getTCombustible);
-router.get("/:idEmpresa", getCombustible);
-router.post("/:accion", postTCombustible);
+
+router.get("/:idEmpresa", getCombustible);//este endpoint obtiene los combustibles de una empresa (facturacion)
+
+router.post("/tipo/:accion", postTCombustible);
+router.post("/:accion/:idAccion", postCombustibleEmpresa);
+
+router.delete("/:idEmpresa/:idCombustible/:accion/:idAccion", deleteCombustibleEmpresa);
+
+router.put("/:idEmpresa/:idCombustible/:accion/:idAccion", putCombustibleEmpresa);
 
 /**
  * @openapi

@@ -4,8 +4,8 @@ import { getTImpuestos, postTImpuestos, postImpuestos, deleteImpuestos, putEmpre
 const router = Router();
 router.get("/", getTImpuestos);
 router.post("/:accion", postTImpuestos);
-router.post("/tipo/:accion", postImpuestos);
-router.delete("/:idEmpresa/:idCombustible/:idImpuesto/:accion", deleteImpuestos);
-router.put("/:idEmpresa/:idCombustible/:idImpuesto/:accion", putEmpresas);
+router.post("/tipo/:accion/:idAccion", postImpuestos);
+router.delete("/:idEmpresa/:idCombustible/:idImpuesto/:accion/:idAccion", deleteImpuestos);
+router.put("/:idEmpresa/:idCombustible/:idImpuesto/:accion/:idAccion", putEmpresas);
 
 export default router;
