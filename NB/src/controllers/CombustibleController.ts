@@ -51,46 +51,79 @@ export const postTCombustible = async (req: Request, res: Response) => {
   }
 };
 
-// Controlador para actualizar precio
-// export const updateCombustiblePrice = async (req: Request, res: Response) => {
-//   try {
-//     const { id } = req.params;
-//     const { precio } = req.body;
+//------------------------------------------//
 
-//     // Validar que el precio sea un número válido
-//     if (!precio || isNaN(Number(precio))) {
-//       return res.status(400).json({ message: "Precio inválido" });
-//     }
+export const postCombustibleEmpresa = async (req: Request, res: Response) => {
+  try {
+    const { accion, idAccion } = req.params;
+    const { idEmpresa, idCombustible, monto } = req.body;
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .input("idEmpresa", sql.Int, idEmpresa)
+      .input("idCombustible", sql.Int, idCombustible)
+      .input("monto", sql.Numeric, monto)
+      .input("accion", sql.Char(4), accion)
+      .input("idAccion", sql.Int, idAccion)
+      .execute("sp_detalle_gral");
+    res.json(result.recordset);
+  } catch (err: any) {
+    console.error("Error al ejecutar SP:", err);
+    res.status(500).json({ message: err.message });
+  }
+};
 
-//     const pool = await connectDB();
 
-//     // Actualizar el precio en la base de datos
-//     const result = await pool.request()
-//       .input('id', id)
-//       .input('precio', Number(precio))
-//       .query(`
-//         UPDATE Combustible
-//         SET precio = @precio
-//         WHERE id = @id
-//       `);
+export const deleteCombustibleEmpresa = async (req: Request, res: Response) => {
+  try {
+    const { idEmpresa, idCombustible, accion, idAccion } = req.params;
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .input("idEmpresa", sql.Int, idEmpresa)
+      .input("idCombustible", sql.Int, idCombustible)
+      .input("accion", sql.Char(4), accion)
+      .input("idAccion", sql.Int, idAccion)
+      .execute("sp_detalle_gral");
+    res.json(result.recordset[0]);
+  } catch (err: any) {
+    console.error("⚠️ ERROR DETALLADO EN DELETE:", {
+      message: err.message,
+      name: err.name,
+      code: err.code,
+      number: err.number,
+      lineNumber: err.lineNumber,
+      state: err.state,
+      stack: err.stack,
+      originalError: err.originalError,
+    });
 
-//     // Verificar si se actualizó algún registro
-//     if (result.rowsAffected[0] === 0) {
-//       return res.status(404).json({ message: "Combustible no encontrado" });
-//     }
+    res.status(500).json({
+      error: true,
+      message: err.message,
+      code: err.code,
+      details: err.originalError,
+    });
+  }
+};
 
-//     // Obtener el registro actualizado para devolverlo
-//     const updatedResult = await pool.request()
-//       .input('id', id)
-//       .query('SELECT * FROM Combustible WHERE id = @id');
+export const putCombustibleEmpresa = async (req: Request, res: Response) => {
+  try {
+    const { idEmpresa, idCombustible, accion, idAccion } = req.params;
+    const { monto } = req.body;
 
-//     return res.json({
-//       message: "Precio actualizado correctamente",
-//       combustible: updatedResult.recordset[0]
-//     });
-
-//   } catch (err) {
-//     console.error("Error al actualizar el precio:", err);
-//     return res.status(500).json({ message: "Error interno del servidor" });
-//   }
-// };
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .input("idEmpresa", sql.Int, idEmpresa)
+      .input("idCombustible", sql.Int, idCombustible)
+      .input("monto", sql.Decimal(18, 2), parseFloat(monto))
+      .input("accion", sql.Char(4), accion)
+      .input("idAccion", sql.Int, idAccion)
+      .execute("sp_detalle_gral");
+    res.json(result.recordset[0]);
+  } catch (err: any) {
+    console.error("Error al ejecutar SP:", err);
+    res.status(500).json({ message: err.message });
+  }
+};
