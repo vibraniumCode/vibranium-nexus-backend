@@ -20,7 +20,7 @@ export const getCombustible = async (req: Request, res: Response) => {
     const pool = await connectDB();
     const result = await pool.request()
       .input('idEmpresa', sql.Int, parseInt(idEmpresa)) // Convierte a número y especifica el tipo
-      .query("SELECT  c.idTipo, tc.txtDesc AS Combustible, c.precio FROM Combustible c INNER JOIN TCombustible tc ON tc.idTC = c.idTipo WHERE c.idEmpresa = @idEmpresa");
+      .query("SELECT  c.idTipo, tc.txtDesc AS tipo, c.precio FROM Combustible c INNER JOIN TCombustible tc ON tc.idTC = c.idTipo WHERE c.idEmpresa = @idEmpresa");
 
     res.json(result.recordset);
   } catch (err) {
