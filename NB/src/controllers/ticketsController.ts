@@ -12,7 +12,8 @@ export const postGeneradorCTickets = async (req: Request, res: Response) => {
       importeMinimo,
       importeMaximo
     } = req.body;
-    const pool = await connectDB(); //Conexion a la base de datos
+
+    const pool = await connectDB();
     const result = await pool
       .request()
       .input("importeTotal", sql.Decimal(18, 2), importeTotal)
@@ -22,7 +23,19 @@ export const postGeneradorCTickets = async (req: Request, res: Response) => {
       .input("importeMax", sql.Decimal(18, 2), importeMaximo)
       .input("idEmpresa", sql.Int, idEmpresa)
       .execute("calcular_comprobantes");
-    res.json(result.recordset); //Respuesta con los datos obtenidos
+
+    // Capturar ambos result sets (puede ser un array o un objeto indexado por nombre)
+    const recordsetsArr = Array.isArray(result.recordsets)
+      ? result.recordsets
+      : Object.values(result.recordsets);
+
+    const comprobantes = recordsetsArr[0];      // Primer result set
+    const resumenCalculado = recordsetsArr[1];  // Segundo result set
+
+    res.json({
+      comprobantes: comprobantes,
+      resumen: resumenCalculado[0]  // El resumen es una sola fila
+    });
   } catch (err) {
     console.error("Error al generar el detalle de los tickets:", err);
     res.status(500).json({ message: "Error interno del servidor" });
