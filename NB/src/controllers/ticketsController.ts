@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { connectDB } from "../config/sqlDB-DESKTOP";
 import sql from "mssql";
 
-export const getGeneradorCTickets = async (req: Request, res: Response) => {
+export const postGeneradorCTickets = async (req: Request, res: Response) => {
   try {
     const { idEmpresa } = req.params;
     const {

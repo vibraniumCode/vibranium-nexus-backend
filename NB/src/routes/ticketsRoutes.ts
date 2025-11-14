@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { getGeneradorCTickets } from "../controllers/ticketsController";
+import { postGeneradorCTickets } from "../controllers/ticketsController";
 
 const router = Router();
-router.get("/:idEmpresa", getGeneradorCTickets);
+router.post("/:idEmpresa", postGeneradorCTickets);
 
 export default router;
