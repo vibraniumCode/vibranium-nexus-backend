@@ -18,8 +18,8 @@ export const postGeneradorCTickets = async (req: Request, res: Response) => {
       .input("importeTotal", sql.Decimal(18, 2), importeTotal)
       .input("litrosPromedio", sql.Decimal(18, 2), litrosPromedio)
       .input("margenLitros", sql.Decimal(18, 2), margenLitros)
-      .input("importeMinimo", sql.Decimal(18, 2), importeMinimo)
-      .input("importeMaximo", sql.Decimal(18, 2), importeMaximo)
+      .input("importeMin", sql.Decimal(18, 2), importeMinimo)
+      .input("importeMax", sql.Decimal(18, 2), importeMaximo)
       .input("idEmpresa", sql.Int, idEmpresa)
       .execute("calcular_comprobantes");
     res.json(result.recordset); //Respuesta con los datos obtenidos
