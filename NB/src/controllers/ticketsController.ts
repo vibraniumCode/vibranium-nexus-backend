@@ -10,7 +10,8 @@ export const postGeneradorCTickets = async (req: Request, res: Response) => {
       litrosPromedio,
       margenLitros,
       importeMinimo,
-      importeMaximo
+      importeMaximo,
+      idCombustible
     } = req.body;
 
     const pool = await connectDB();
@@ -21,6 +22,7 @@ export const postGeneradorCTickets = async (req: Request, res: Response) => {
       .input("margenLitros", sql.Decimal(18, 2), margenLitros)
       .input("importeMin", sql.Decimal(18, 2), importeMinimo)
       .input("importeMax", sql.Decimal(18, 2), importeMaximo)
+      .input("idCombustible", sql.Int, idCombustible)
       .input("idEmpresa", sql.Int, idEmpresa)
       .execute("calcular_comprobantes");
 

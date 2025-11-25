@@ -115,7 +115,7 @@ export const postEmpresa = async (req: Request, res: Response) => {
       .input("localidad", sql.VarChar(50), localidad)
       .input("provincia", sql.VarChar(50), provincia)
       .input("telefono", sql.VarChar(15), telefono)
-      .input("actividad", sql.VarChar(50), actividad)
+      .input("actividad", sql.Date, actividad)
       .input("idUser", sql.Int, idUser)
       .input("accion", sql.Char(4), accion)
       .execute("sp_estaciones");
