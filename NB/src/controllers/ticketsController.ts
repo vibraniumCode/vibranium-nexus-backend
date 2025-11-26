@@ -43,3 +43,35 @@ export const postGeneradorCTickets = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
+export const postDetalleImpuestoTickets = async (req: Request, res: Response) => {
+  try {
+    const { idEmpresa } = req.params;
+    const { litros, idCombustible, totalFinal } = req.body;
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .input("Litros", sql.Int, litros)
+      .input("idCombustible", sql.Int, idCombustible)
+      .input("TotalFinal", sql.Decimal(18, 2), totalFinal)
+      .input("idEmpresa", sql.Int, idEmpresa)
+      .execute("sp_CalcularFacturaImpuestos");
+
+    const recordsetsArr = Array.isArray(result.recordsets)
+      ? result.recordsets
+      : Object.values(result.recordsets);
+
+    const detalleImporteGeneral = recordsetsArr[0];
+    const detalleImpuestos = recordsetsArr[1];
+    const detalleFinal = recordsetsArr[2];
+
+    res.json({
+      detalleImporteGeneral: detalleImporteGeneral,
+      detalleImpuestos: detalleImpuestos,
+      detalleFinal: detalleFinal
+    });
+  } catch (err) {
+    console.error("Error al obtener el detalle de impuestos de los tickets:", err);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+};
