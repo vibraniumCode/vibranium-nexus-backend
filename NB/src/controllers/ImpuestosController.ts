@@ -31,6 +31,22 @@ export const postTImpuestos = async (req: Request, res: Response) => {
   }
 };
 
+export const deleteTImpuestos = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .input("id", sql.Int, parseInt(id))
+      .input("accion", sql.Char(4), 'DLTE')
+      .execute("sp_impuestos");
+    res.json(result.recordset[0]);
+  } catch (err) {
+    console.error("Error al eliminar el impuesto:", err);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+}
+
 export const postImpuestos = async (req: Request, res: Response) => {
   try {
     const { accion, idAccion } = req.params;

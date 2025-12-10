@@ -51,6 +51,22 @@ export const postTCombustible = async (req: Request, res: Response) => {
   }
 };
 
+export const deleteTCombustible = async (req: Request, res: Response) => {
+  try {
+    const { idTC } = req.params;
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .input("id", sql.Int, parseInt(idTC))
+      .input("accion", sql.Char(4), 'DLTE')
+      .execute("sp_combustible");
+    res.json(result.recordset[0]);
+  } catch (err) {
+    console.error("Error al eliminar el combustible:", err);
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+}
+
 //------------------------------------------//
 
 export const postCombustibleEmpresa = async (req: Request, res: Response) => {
