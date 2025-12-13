@@ -5,4 +5,5 @@ export const registerRoutes = (app: any, routes: any) => {
   app.use("/api/impuestos", routes.impuestoRoutes);
   app.use("/api/clientes", routes.clienteRoutes);
   app.use("/api/tickets", routes.ticketsRoutes);
+  app.use("/api/informes", routes.informeRoutes);
 };

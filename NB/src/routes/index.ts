@@ -4,3 +4,4 @@ export { default as impuestoRoutes } from './impuestoRoutes';
 export { default as clienteRoutes } from './clienteRoutes';
 export { default as authRoutes } from './auth';
 export { default as ticketsRoutes } from './ticketsRoutes';
+export { default as informeRoutes } from './informeRoutes';
