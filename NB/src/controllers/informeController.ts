@@ -22,3 +22,19 @@ export const getInforme = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getResumen = async (req: Request, res: Response) => {
+  try {
+    const pool = await connectDB();
+    const result = await pool.request()
+      .query("SP_RESUMEN");
+    res.json(result.recordset);
+  } catch (err) {
+    console.error("Error al obtener el informe:", err);
+    // Muestra más detalles del error en desarrollo
+    res.status(500).json({
+      message: "Error interno del servidor",
+      error: process.env.NODE_ENV === 'development' ? (err as Error).message : undefined
+    });
+  }
+};

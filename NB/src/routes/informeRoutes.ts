@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { getInforme } from "../controllers/informeController";
+import { getInforme, getResumen } from "../controllers/informeController";
 
 const router = Router();
 router.post("/", getInforme);
+router.get("/", getResumen)
 
 export default router;
