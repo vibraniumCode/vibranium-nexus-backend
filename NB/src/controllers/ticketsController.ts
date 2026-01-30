@@ -11,7 +11,9 @@ export const postGeneradorCTickets = async (req: Request, res: Response) => {
       margenLitros,
       importeMinimo,
       importeMaximo,
-      idCombustible
+      idCombustible,
+      fechaDesde,
+      fechaHasta
     } = req.body;
 
     const pool = await connectDB();
@@ -23,8 +25,10 @@ export const postGeneradorCTickets = async (req: Request, res: Response) => {
       .input("importeMin", sql.Decimal(18, 2), importeMinimo)
       .input("importeMax", sql.Decimal(18, 2), importeMaximo)
       .input("idCombustible", sql.Int, idCombustible)
+      .input("FechaDesde", sql.Date, fechaDesde)
+      .input("FechaHasta", sql.Date, fechaHasta)
       .input("idEmpresa", sql.Int, idEmpresa)
-      .execute("calcular_comprobantes");
+      .execute("calcular_comprobantes_param");
 
     // Capturar ambos result sets (puede ser un array o un objeto indexado por nombre)
     const recordsetsArr = Array.isArray(result.recordsets)
