@@ -13,7 +13,8 @@ export const postGeneradorCTickets = async (req: Request, res: Response) => {
       importeMaximo,
       idCombustible,
       fechaDesde,
-      fechaHasta
+      fechaHasta,
+      idCliente
     } = req.body;
 
     const pool = await connectDB();
@@ -28,6 +29,7 @@ export const postGeneradorCTickets = async (req: Request, res: Response) => {
       .input("FechaDesde", sql.Date, fechaDesde)
       .input("FechaHasta", sql.Date, fechaHasta)
       .input("idEmpresa", sql.Int, idEmpresa)
+      .input("idCliente", sql.Int, idCliente)
       .execute("calcular_comprobantes");
 
     // Capturar ambos result sets (puede ser un array o un objeto indexado por nombre)

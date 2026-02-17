@@ -10,7 +10,8 @@ export const getInforme = async (req: Request, res: Response) => {
     const result = await pool.request()
       .input('fechaDesde', sql.Date, new Date(fechaDesde))
       .input('fechaHasta', sql.Date, new Date(fechaHasta))
-      .query("SELECT FECHA, HORA, N_FACTURA, N_LITROS, IMPORTE FROM COMPROBANTE_HISTORICO WHERE CONVERT(DATE, FECHA, 103) BETWEEN @fechaDesde AND @fechaHasta;");
+      .input('idCliente', sql.Int, req.body.idCliente)
+      .query("SELECT FECHA, HORA, N_FACTURA, N_LITROS, IMPORTE FROM COMPROBANTE_HISTORICO WHERE TRY_CONVERT(DATE, FECHA) BETWEEN @fechaDesde AND @fechaHasta AND idClientes = @idCliente;");
 
     res.json(result.recordset);
   } catch (err) {
